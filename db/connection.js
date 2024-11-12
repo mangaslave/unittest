@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-////The environment variable for your connection string goes here////
-let mongoDB = process.env.MONGODB;
-// Make sure to create .env file and use an environment variable
+const mongoDB = process.env.MONGODB;
+
+if (!mongoDB) {
+    throw new Error("MongoDB connection string is undefined. Check your .env file.");
+}
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 module.exports = mongoose.connection;
+
